@@ -1,7 +1,6 @@
 use crate::client::{Client, Error, PacketState};
 use crate::traits::{Packet, Readable, Writable};
 use crate::client::Error::Refusal;
-use std::cell::Ref;
 
 #[derive(Debug)]
 pub struct HandshakePacket {

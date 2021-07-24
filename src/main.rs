@@ -9,8 +9,18 @@ use grimstone::config::{Config, ConcreteConfig};
 use grimstone::packets;
 use simple_logger::SimpleLogger;
 use log::LevelFilter;
+use grimstone::server::Server;
+use grimstone::single::SingleWorldFile;
+use grimstone::world::{WorldSyncer, World, ChunkContainer, Chunk};
+use std::any::Any;
+use std::borrow::BorrowMut;
+use grimstone::world::Block::Air;
 
 fn main() -> Result<(), Error> {
+    Server::global().world = Some(World::new(Box::new(SingleWorldFile::new("world.sng"))));
+    let w = Server::global().world.as_mut().unwrap();
+    w.load_chunk(0, 0, 0);
+
     SimpleLogger::new()
         .with_level(LevelFilter::Debug)
         .init()
@@ -35,7 +45,7 @@ fn main() -> Result<(), Error> {
                     let mut packet_result = client.read_packet();
                     match packet_result {
                         Ok(packet) => {
-                            packet.act(&mut client);
+                            packet.act(&mut client).expect("Error while processing packet {}");
                         }
                         Err(error) => {
                             match error {

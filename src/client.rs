@@ -9,7 +9,6 @@ use crate::client::Error::{IoError, CannotReplace, InvalidPacketId};
 use crate::buffer::Buffer;
 use crate::config::ConcreteConfig;
 use uuid::Uuid;
-use uuid::Version::Random;
 
 #[derive(Eq, PartialEq, Hash, Copy, Clone, Debug)]
 pub enum PacketState {
@@ -78,6 +77,10 @@ impl Client {
             return Err(InvalidPacketId(self.state, id))
         }
         let pkt: Box<dyn Packet> = func_opt.unwrap()(&mut buffer)?;
+
+        #[cfg(feature = "debug")]
+        log::debug!("Read [C->S] {:?}", pkt);
+
         Ok(pkt)
     }
 
@@ -88,6 +91,10 @@ impl Client {
         packet.write(&mut buffer)?;
         let mut size = self.write_var_int(buffer.bytes.len() as i32)?;
         size += self.write(&*buffer.bytes)?;
+
+        #[cfg(feature = "debug")]
+        log::debug!("Wrote [S->C] {:?}", packet);
+
         Ok(size)
     }
 
@@ -99,6 +106,10 @@ impl Client {
             }
             None => Ok(())
         }
+    }
+
+    pub fn write_initial_play_packets(&mut self) {
+
     }
 }
 

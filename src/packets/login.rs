@@ -12,23 +12,23 @@ use crate::traits::{Packet, Readable, Writable};
 use crate::client::{Error, Client};
 use std::collections::hash_map::DefaultHasher;
 use std::hash::{Hash, Hasher};
-use std::mem::transmute;
-use std::mem::size_of;
 use crate::client::Error::Refusal;
 use crate::client::PacketState::Play;
-use std::cell::Ref;
 use rand::{Rng, SeedableRng};
 use rand_chacha::ChaCha8Rng;
 
+#[derive(Debug)]
 pub struct StartLoginPacket {
     username: String
 }
 
+#[derive(Debug)]
 pub struct EndLoginPacket {
     uuid: Uuid,
     username: String
 }
 
+#[derive(Debug)]
 pub struct SetCompressionPacket {
 
 }

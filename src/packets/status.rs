@@ -1,7 +1,7 @@
 use crate::client::{Client, Error};
 use crate::traits::{Packet, Writable, Readable};
 use crate::client::Error::Refusal;
-use crate::{MINECRAFT_VERSION, MINECRAFT_PROTOCOL_VERSION};
+use crate::{MINECRAFT_VERSION, MINECRAFT_PROTOCOL_VERSION, GRIMSTONE_VERSION};
 
 #[derive(Debug)]
 pub struct RequestPacket {}
@@ -20,14 +20,16 @@ impl Packet for RequestPacket {
     fn act(&self, client: &mut Client) -> Result<(), Error> {
         client.write_packet(&ResponsePacket {
             json: format!(
-                "{{\"version\":{{\"name\":\"Grimstone {}\",\"protocol\":{}1}},\"players\":{{\"max\":100,\"online\":50,\"sample\":[]}},\"description\":{{\"text\":\"{}\"}}}}",
-                MINECRAFT_VERSION, MINECRAFT_PROTOCOL_VERSION,
+                "{{\"version\":{{\"name\":\"Grimstone {} for {}/{}\",\"protocol\":{}1}},\"players\":{{\"max\":100,\"online\":50,\"sample\":[]}},\"description\":{{\"text\":\"{}\"}}}}",
+                GRIMSTONE_VERSION, MINECRAFT_VERSION,
+                MINECRAFT_PROTOCOL_VERSION, MINECRAFT_PROTOCOL_VERSION,
                 client.config.server_motd)
         })?;
         Ok(())
     }
 }
 
+#[derive(Debug)]
 pub struct ResponsePacket {
     json: String
 }
@@ -49,6 +51,7 @@ impl Packet for ResponsePacket {
     }
 }
 
+#[derive(Debug)]
 pub struct PingPongPacket {
     number: u64
 }

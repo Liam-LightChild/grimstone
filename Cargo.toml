@@ -16,8 +16,10 @@ uuid = "0.8.2"
 rand = "0.8.4"
 rand_chacha = "0.3.1"
 
-[grimstone-server.dependencies]
-grimstone = "1.17"
+[features]
+debug = []
+world_syncers = []
+single = ["world_syncers"]
 
 [lib]
 name = "grimstone"
@@ -26,3 +28,4 @@ path = "src/lib.rs"
 [[bin]]
 name = "grimstone-server"
 path = "src/main.rs"
+required-features = ["debug", "world_syncers", "single"]

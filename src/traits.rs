@@ -1,7 +1,8 @@
 use crate::client::{Client, Error};
 use std::mem::{transmute, size_of};
+use std::fmt::Debug;
 
-pub trait Packet {
+pub trait Packet: Debug {
     fn id(&self) -> u32;
     fn read(input: &mut dyn Readable) -> Result<Self, Error> where Self : Sized;
     fn write(&self, output: &mut dyn Writable) -> Result<(), Error>;
