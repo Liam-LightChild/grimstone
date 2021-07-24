@@ -1,0 +1,28 @@
+[package]
+name = "grimstone"
+version = "1.17.0"
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+toml = "0.5.8"
+serde_derive = "1.0.126"
+serde = "1.0.126"
+byteorder = "1.4.3"
+log = "0.4.14"
+simple_logger = "1.11.0"
+uuid = "0.8.2"
+rand = "0.8.4"
+rand_chacha = "0.3.1"
+
+[grimstone-server.dependencies]
+grimstone = "1.17"
+
+[lib]
+name = "grimstone"
+path = "src/lib.rs"
+
+[[bin]]
+name = "grimstone-server"
+path = "src/main.rs"
