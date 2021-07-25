@@ -1,4 +1,4 @@
-use serde_derive::{Serialize, Deserialize};
+use serde::{Serialize, Deserialize};
 use std::fs::read_to_string;
 
 #[derive(Clone)]
