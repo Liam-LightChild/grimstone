@@ -1,12 +1,3 @@
-//     C→S: Handshake with Next State set to 2 (login)
-// [ ] C→S: Login Start
-// [ ] S→C: Encryption Request
-//     Client auth
-// [ ] C→S: Encryption Response
-// [ ] Server auth, both enable encryption
-// [ ] S→C: Set Compression (optional)
-// [ ] S→C: Login Success
-
 use uuid::Uuid;
 use crate::traits::{Packet, Readable, Writable};
 use crate::client::{Error, Client};
