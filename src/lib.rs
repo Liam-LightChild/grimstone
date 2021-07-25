@@ -1,4 +1,5 @@
 use std::fmt::{Display, Formatter, Write};
+use serde::{Serialize, Deserialize};
 
 pub mod client;
 pub mod config;
@@ -32,4 +33,9 @@ impl<'a> Display for NamespacedId<'a> {
 #[inline]
 pub const fn nsid<'a>(ns: &'a str, id: &'a str) -> NamespacedId<'a> {
     NamespacedId(ns, id)
+}
+
+#[derive(Debug, Copy, Clone, Eq, PartialEq, Deserialize, Serialize)]
+pub enum GameMode {
+    Survival
 }
