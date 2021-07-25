@@ -8,6 +8,7 @@ pub mod buffer;
 pub mod world;
 pub mod server;
 #[cfg(feature = "single")] pub mod single;
+mod registry;
 
 pub const MINECRAFT_VERSION: &str = "1.17.0";
 pub const GRIMSTONE_VERSION: &str = "1.17.0.2";
