@@ -8,6 +8,7 @@ use crate::packets::login::StartLoginPacket;
 pub mod handshake;
 pub mod status;
 pub mod login;
+pub mod play;
 
 impl Client {
     fn register<T: 'static + Packet>(&mut self, state: PacketState, id: u32) -> Result<(), Error> {

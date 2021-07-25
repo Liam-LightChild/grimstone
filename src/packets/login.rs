@@ -16,6 +16,8 @@ use crate::client::Error::Refusal;
 use crate::client::PacketState::Play;
 use rand::{Rng, SeedableRng};
 use rand_chacha::ChaCha8Rng;
+use crate::packets::play::JoinGamePacket;
+use crate::GameMode;
 
 #[derive(Debug)]
 pub struct StartLoginPacket {
@@ -83,6 +85,10 @@ impl Packet for EndLoginPacket {
     fn act(&self, client: &mut Client) -> Result<(), Error> {
         log::info!("State swap occurring; {:?} -> {:?}", client.state, Play);
         client.state = Play;
+        client.write_packet(&JoinGamePacket {
+            eid: 0, // TODO
+            game_mode: GameMode::Survival
+        });
         Ok(())
     }
 }
