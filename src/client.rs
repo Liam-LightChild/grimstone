@@ -87,13 +87,17 @@ impl Client {
     pub fn write_packet(&mut self, packet: &dyn Packet) -> Result<usize, Error> {
         let mut buffer = Buffer::new();
         buffer.write_var_int(packet.id() as i32)?;
-        packet.act(self)?;
         packet.write(&mut buffer)?;
-        let mut size = self.write_var_int(buffer.bytes.len() as i32)?;
-        size += self.write(&*buffer.bytes)?;
+
+        let mut new_buf = Buffer::new();
+        let mut size = new_buf.write_var_int(buffer.bytes.len() as i32)?;
+        size += new_buf.write(&*buffer.bytes)?;
+        self.write(new_buf.bytes.as_slice());
 
         #[cfg(feature = "debug")]
         log::debug!("Wrote [S->C] {:?}", packet);
+
+        packet.act(self)?;
 
         Ok(size)
     }
