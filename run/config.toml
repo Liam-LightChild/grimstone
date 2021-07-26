@@ -1,7 +1,7 @@
-[SERVER]
+[server]
 port = 25565
-motd = "This SERVER is very grim.\n"
+motd = "This server is very grim.\n"
 
-[SERVER.networking]
+[server.networking]
 enable_compression = true
 online_mode = false # TODO
